@@ -53,15 +53,17 @@ const getPixelIndex = (args) => {
 /**
  * Returns a color from the given arguments.
  * Returns null if the color is not valid.
- * @param {string[]} args 
+ * @param {string[]} args
  */
 const getColor = (args) => {
   const input = args.join(' ');
   if (input.match(/^r /i)) {
-    return ['r', 'g', 'b'].map(() => {
-      const hex = Math.floor(Math.random() * 256).toString(16);
-      return hex.length === 1 ? `0${hex}` : hex;
-    }).join();
+    return ['r', 'g', 'b']
+      .map(() => {
+        const hex = Math.floor(Math.random() * 256).toString(16);
+        return hex.length === 1 ? `0${hex}` : hex;
+      })
+      .join();
   }
   const matches = input.match(/color ([0-9a-f]{6})$/i);
   if (matches) return matches[1];
