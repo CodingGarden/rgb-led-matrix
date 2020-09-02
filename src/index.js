@@ -19,6 +19,17 @@ let strip;
 
 const validColor = (color) => color.match(/^[0-9a-f]{6}$/i);
 
+function embiggen(command) {
+  command = command.split(/[ ,]/g)
+  command.shift()
+  let indices = [];
+  return command.map(color=>{
+    if (color.startsWith("*")) return indices[parseInt(color.slice(1), 16)]
+    indices.push(color);
+    return color;
+  })
+}
+
 const lightenColor = (color) => {
   const [h, s] = chroma(`#${color}`).hsl();
   return chroma.hsl(h, s, 0.3).hex();
@@ -66,7 +77,7 @@ board.on('ready', () => {
         } else if (command === '!rgb') {
           if (!args.length) return;
           const colorsString = args.shift();
-          const colors = colorsString.split(',');
+          const colors = embiggen(colorsString);
           if (colors.length !== 40) return;
           colors.forEach((color, i) => {
             if (validColor(color)) {
